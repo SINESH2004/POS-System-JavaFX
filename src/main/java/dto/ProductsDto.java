@@ -8,7 +8,6 @@ import lombok.*;
 public class ProductsDto {
     private String code;
     private String description;
-    private double salary;
+    private double unitPrice;
     private int quantity;
-
 }

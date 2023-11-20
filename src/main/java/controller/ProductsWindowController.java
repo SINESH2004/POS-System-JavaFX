@@ -6,7 +6,9 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import db.DBConnection;
+import dto.CustomerDto;
 import dto.ProductsDto;
+import dto.TableModel.CustomerTm;
 import dto.TableModel.ProductsTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +22,10 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.CustomerModel;
+import model.ProductsModel;
+import model.impl.CustomerModelImpl;
+import model.impl.ProductsModelImpl;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,6 +52,7 @@ public class ProductsWindowController implements Initializable {
     public JFXTextField txtDesc;
     public JFXTextField CodeInput;
 
+    private ProductsModel productsModel= new ProductsModelImpl();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Code.setCellValueFactory(new TreeItemPropertyValueFactory<>("code"));
@@ -54,8 +61,17 @@ public class ProductsWindowController implements Initializable {
         Qty.setCellValueFactory(new TreeItemPropertyValueFactory<>("quantity"));
         Option.setCellValueFactory(new TreeItemPropertyValueFactory<>("delete"));
         loadProductsTable();
-    }
 
+    }
+    private void setData(ProductsTm newValue) {
+        if (newValue != null) {
+            TableShown.setEditable(false);
+            CodeInput.setText(newValue.getCode());
+            DescriptionInput.setText(newValue.getDescription());
+            UnitPrice.setText(String.valueOf(newValue.getUnitPrice()));
+            QtyInput.setText(String.valueOf(newValue.getQuantity()));
+        }
+    }
     private void loadProductsTable() {
         ObservableList<ProductsTm> tmList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM products";
@@ -91,7 +107,7 @@ public class ProductsWindowController implements Initializable {
         }
     }
     private void deleteProduct(String code) {
-        String sql = "DELETE from item WHERE code=?";
+        String sql = "DELETE from products WHERE code=?";
 
         try {
             PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
@@ -108,6 +124,54 @@ public class ProductsWindowController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void SearchBtnOnAction(ActionEvent actionEvent) {
+
+    }
+
+    public void UpdateBtnOnAction(ActionEvent actionEvent) {
+        try {
+            boolean isUpdated = productsModel.productUpdateBtn(new ProductsDto(CodeInput.getText(),
+                    DescriptionInput.getText(),
+                    Double.parseDouble(UnitPrice.getText()),
+                    Integer.parseInt(QtyInput.getText())
+            ));
+            if (isUpdated){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
+                loadProductsTable();
+                clearFields();
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void clearFields() {
+        TableShown.refresh();
+        PriceInput.clear();
+        CodeInput.clear();
+        QtyInput.clear();
+        DescriptionInput.clear();
+        TableShown.setEditable(true);
+    }
+    public void SaveBtnOnAction(ActionEvent actionEvent) {
+        try {
+            boolean isSaved = productsModel.productSaveBtn(new ProductsDto(CodeInput.getText(),
+                    DescriptionInput.getText(),
+                    Double.parseDouble(UnitPrice.getText()),
+                    Integer.parseInt(QtyInput.getText())
+            ));
+            if (isSaved){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Saved!").show();
+                loadProductsTable();
+                clearFields();
+            }
+
+        } catch (SQLIntegrityConstraintViolationException ex){
+            new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+//=======================================================================================
     public void CustomerBtnOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) pane.getScene().getWindow();
         try {
@@ -144,41 +208,6 @@ public class ProductsWindowController implements Initializable {
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/DashBoardForm.fxml"))));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void SearchBtnOnAction(ActionEvent actionEvent) {
-
-    }
-
-    public void UpdateBtnOnAction(ActionEvent actionEvent) {
-
-    }
-
-    public void SaveBtnOnAction(ActionEvent actionEvent) {
-        ProductsDto dto = new ProductsDto(CodeInput.getText(),
-                DescriptionInput.getText(),
-                Double.parseDouble(PriceInput.getText()),
-                Integer.parseInt(QtyInput.getText())
-        );
-        String sql = "INSERT INTO item VALUES(?,?,?,?)";
-
-        try {
-            PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            pstm.setString(1,dto.getCode());
-            pstm.setString(2,dto.getDescription());
-            pstm.setDouble(3,dto.getSalary());
-            pstm.setInt(4,dto.getQuantity());
-            int result = pstm.executeUpdate();
-            if (result>0){
-                new Alert(Alert.AlertType.INFORMATION,"Item Saved!").show();
-                loadProductsTable();
-            }
-
-        } catch (SQLIntegrityConstraintViolationException ex){
-            new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
-        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }

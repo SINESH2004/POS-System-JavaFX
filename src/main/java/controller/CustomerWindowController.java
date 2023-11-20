@@ -65,49 +65,6 @@ public class CustomerWindowController implements Initializable {
         });
     }
 
-    public void ProductBtnOnAction(ActionEvent actionEvent) {
-        Stage stage = (Stage) Pane.getScene().getWindow();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/ProductsWindow.fxml"))));
-            stage.centerOnScreen();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void CustomerBtnOnAction(ActionEvent actionEvent) {
-        Stage stage = (Stage) Pane.getScene().getWindow();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/CustomerWindow.fxml"))));
-            stage.centerOnScreen();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void ReportBtnOnAction(ActionEvent actionEvent) {
-        Stage stage = (Stage) Pane.getScene().getWindow();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/ReportWindow.fxml"))));
-            stage.centerOnScreen();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void InvoiceBtnOnAction(ActionEvent actionEvent) {
-        Stage stage = (Stage) Pane.getScene().getWindow();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/InvoiceWindow.fxml"))));
-            stage.centerOnScreen();
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     void reloadButtonOnAction(ActionEvent event) {
         loadCustomerTable();
         CustomerTableID.refresh();
@@ -120,15 +77,6 @@ public class CustomerWindowController implements Initializable {
         CustomerNameField.clear();
         CustomerIDField.clear();
         CustomerIDField.setEditable(true);
-    }
-    public void HomeBtnOnAction(ActionEvent actionEvent) {
-        Stage stage = (Stage) Pane.getScene().getWindow();
-        try {
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/DashBoardForm.fxml"))));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     private void setData(CustomerTm newValue) {
         if (newValue != null) {
@@ -203,7 +151,6 @@ public class CustomerWindowController implements Initializable {
             e.printStackTrace();
         }
     }
-
     public void UpdateBtnOnAction(ActionEvent actionEvent) {
         try {
             boolean isUpdated = customerModel.UpdateBtn(new CustomerDto(CustomerIDField.getText(),
@@ -217,6 +164,61 @@ public class CustomerWindowController implements Initializable {
                 clearFields();
             }
         } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //===============================================================================================================================
+    public void ProductBtnOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) Pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/ProductsWindow.fxml"))));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void CustomerBtnOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) Pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/CustomerWindow.fxml"))));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ReportBtnOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) Pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/ReportWindow.fxml"))));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void InvoiceBtnOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) Pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/InvoiceWindow.fxml"))));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void HomeBtnOnAction(ActionEvent actionEvent) {
+        Stage stage = (Stage) Pane.getScene().getWindow();
+        try {
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/Assets/Assets/fxml/DashBoardForm.fxml"))));
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
