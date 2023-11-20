@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="835.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductsWindowController">
+    <center>
+        <GridPane prefHeight="615.0" prefWidth="950.0" BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="84.0" minWidth="49.0" prefWidth="56.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="823.0" minWidth="100.0" prefWidth="769.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="4.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="329.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="15.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.0" minWidth="10.0" prefWidth="263.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="56.0" minWidth="35.0" prefWidth="56.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.0" minWidth="10.0" prefWidth="140.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="72.0" minWidth="50.0" prefWidth="64.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="71.0" minWidth="10.0" prefWidth="62.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <JFXTextField fx:id="CodeInput" promptText="Code" style="-fx-background-color: #d4d9d6;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Ebrima Bold" size="12.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets></JFXTextField>
+                        <Label prefHeight="28.0" prefWidth="98.0" text="Item Code" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Courier New Bold" size="18.0" />
+                     </font></Label>
+                        <JFXTextField fx:id="txtDesc" layoutX="10.0" layoutY="36.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label layoutX="10.0" layoutY="13.0" prefHeight="23.0" prefWidth="128.0" text="Description" GridPane.columnIndex="3">
+                     <font>
+                        <Font name="Courier New Bold" size="18.0" />
+                     </font></Label>
+                        <Label prefHeight="23.0" prefWidth="116.0" text="Unit Price" GridPane.columnIndex="5">
+                     <font>
+                        <Font name="Courier New Bold" size="18.0" />
+                     </font></Label>
+                        <JFXTextField fx:id="txtUnitPrice" layoutX="222.0" layoutY="36.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                        <Label layoutX="448.0" layoutY="13.0" prefHeight="18.0" prefWidth="71.0" text="QTY" GridPane.columnIndex="7">
+                     <font>
+                        <Font name="Courier New Bold" size="18.0" />
+                     </font></Label>
+                        <JFXTextField fx:id="txtQty" layoutX="448.0" layoutY="36.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="DescriptionInput" layoutX="20.0" layoutY="33.0" promptText="Description" style="-fx-background-color: #d4d9d6;" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Ebrima Bold" size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets>
+                  </JFXTextField>
+                  <JFXTextField fx:id="PriceInput" layoutX="193.0" layoutY="33.0" promptText="Price" style="-fx-background-color: #d4d9d6;" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Ebrima Bold" size="14.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets>
+                  </JFXTextField>
+                  <JFXTextField fx:id="QtyInput" layoutX="517.0" layoutY="33.0" promptText="QTY" style="-fx-background-color: #d4d9d6;" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Ebrima Bold" size="13.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets top="20.0" />
+                     </opaqueInsets>
+                  </JFXTextField>
+                    </children>
+                </GridPane>
+                <JFXTextField fx:id="SearchIDInput" maxWidth="-Infinity" prefWidth="200.0" promptText="Search By ID" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Ebrima Bold" size="14.0" />
+               </font></JFXTextField>
+                <JFXTreeTableView fx:id="TableShown" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                    <columns>
+                        <TreeTableColumn fx:id="Code" maxWidth="-1.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Item Code" />
+                        <TreeTableColumn fx:id="Desc" maxWidth="-1.0" minWidth="220.0" prefWidth="220.0" resizable="false" text="Description" />
+                        <TreeTableColumn fx:id="UnitPrice" maxWidth="-1.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Unit Price" />
+                        <TreeTableColumn fx:id="Qty" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="QTY on Hand" />
+                        <TreeTableColumn fx:id="Option" maxWidth="-1.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Option" />
+                    </columns>
+                </JFXTreeTableView>
+                <JFXButton fx:id="SaveBtn" alignment="CENTER" contentDisplay="RIGHT" onAction="#SaveBtnOnAction" prefHeight="33.0" prefWidth="74.0" style="-fx-background-color: #000a73;" text="Save" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <font>
+                        <Font name="Arial Black" size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+               <opaqueInsets>
+                  <Insets left="30.0" />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+                </JFXButton>
+                <JFXButton fx:id="UpdateBtn" layoutX="742.0" layoutY="584.0" onAction="#UpdateBtnOnAction" prefHeight="33.0" prefWidth="94.0" style="-fx-background-color: #a3000e;" text="Update" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                    <font>
+                        <Font name="Arial Black" size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                    <GridPane.margin>
+                        <Insets right="100.0" />
+                    </GridPane.margin>
+               <opaqueInsets>
+                  <Insets left="30.0" />
+               </opaqueInsets>
+                </JFXButton>
+            <GridPane GridPane.rowIndex="5">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#HomeBtnOnAction" prefHeight="47.0" prefWidth="53.0" textOverrun="WORD_ELLIPSIS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ImageInput />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/HomeBtn.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#InvoiceBtnOnAction" prefHeight="47.0" prefWidth="53.0" textOverrun="WORD_ELLIPSIS" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ImageInput />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="60.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Invoice.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#ReportBtnOnAction" prefHeight="47.0" prefWidth="53.0" textOverrun="WORD_ELLIPSIS" GridPane.rowIndex="3">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ImageInput />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/Reports.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="19.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#CustomerBtnOnAction" prefHeight="47.0" prefWidth="53.0" textOverrun="WORD_ELLIPSIS" GridPane.rowIndex="2">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ImageInput />
+                     </effect>
+                     <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/customer-icon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </GridPane>
+            <Label text="PRODUCTS" textAlignment="CENTER" textFill="#1606f5" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Constantia Bold" size="37.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+            </Label>
+            <JFXButton fx:id="SearchBtn" layoutX="641.0" layoutY="195.0" onAction="#SearchBtnOnAction" prefHeight="33.0" prefWidth="94.0" style="-fx-background-color: #008707;" text="Search" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial Black" size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <opaqueInsets>
+                  <Insets left="30.0" />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets right="250.0" />
+               </GridPane.margin>
+            </JFXButton>
+            </children>
+        </GridPane>
+    </center>
+</BorderPane>

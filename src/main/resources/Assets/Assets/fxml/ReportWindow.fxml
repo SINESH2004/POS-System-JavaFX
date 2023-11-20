@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="Pane" prefHeight="482.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportWindowController">
+   <children>
+      <Pane layoutX="255.0" layoutY="40.0" prefHeight="485.0" prefWidth="545.0">
+         <children>
+            <ImageView  fitHeight="532.0" fitWidth="618.0" layoutX="-50.0" layoutY="-45.0" opacity="0.48">
+               <image>
+                  <Image url="@../images/pompeii-ash-free-solidcolor-background.jpg" />
+               </image>
+            </ImageView>
+            <Text id="pointOfSaleStyling" fx:id="pointOfSaleStyling" fill="#3400b9" layoutX="-5.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reports" wrappingWidth="373.9830722808838">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="182.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Copyright.png" />
+               </image>
+            </ImageView>
+            <Text fill="#800000" layoutX="120.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text fill="#7c0000" layoutX="204.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SG All Rights Reserved">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Line endX="77.0" layoutX="126.0" layoutY="156.0" startX="-124.0" />
+      <JFXButton id="HomeBtn" fx:id="HomeBtn" layoutX="77.0" layoutY="182.0" onAction="#HomeBtnOnAction" prefHeight="36.0" prefWidth="90.0" text="HOME">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="36.0" fitWidth="39.0" layoutX="34.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/HomeBtn.png" />
+         </image>
+      </ImageView>
+      <JFXButton id="InvoiceBtn" fx:id="InvoiceBtn" layoutX="76.0" layoutY="248.0" onAction="#InvoiceBtnOnAction" prefHeight="36.0" prefWidth="90.0" text="INVOICE">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="56.0" fitWidth="64.0" layoutX="24.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Invoice.png" />
+         </image>
+      </ImageView>
+      <JFXButton id="ReportBtn" fx:id="ReportBtn" buttonType="RAISED" layoutX="76.0" layoutY="317.0" onAction="#ReportBtnOnAction" prefHeight="36.0" prefWidth="90.0" text="REPORTS">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="46.0" fitWidth="56.0" layoutX="24.0" layoutY="307.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Reports.png" />
+         </image>
+      </ImageView>
+      <JFXButton id="CustomerBtn" fx:id="CustomerBtn" buttonType="RAISED" layoutX="70.0" layoutY="386.0" onAction="#CustomerBtnOnAction" prefHeight="36.0" prefWidth="103.0" text="CUSTOMER">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="46.0" fitWidth="56.0" layoutX="24.0" layoutY="381.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/customer-icon.png" />
+         </image>
+      </ImageView>
+      <JFXButton id="ProductBtn" fx:id="ProductBtn" buttonType="RAISED" layoutX="76.0" layoutY="454.0" onAction="#ProductBtnOnAction" prefHeight="36.0" prefWidth="90.0" text="PRODUCTS">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="46.0" fitWidth="56.0" layoutX="29.0" layoutY="444.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Products.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="169.0" fitWidth="191.0" layoutX="17.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/POS.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

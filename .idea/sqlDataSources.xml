@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="afc0093b-e7cc-4159-9e77-dd0076269977" name="@localhost Mapping">
+      <data-sources db="8e159797-fe64-40a4-9478-a2e91886f15a" />
+      <scope>
+        <node kind="schema" qname="thogakade" />
+      </scope>
+    </mapping>
+  </component>
+</project>
