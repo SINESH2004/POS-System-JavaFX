@@ -13,34 +13,39 @@ import java.util.List;
 public class ProductsModelImpl implements ProductsModel {
     @Override
     public boolean productSaveBtn(ProductsDto dto) throws SQLException, ClassNotFoundException {
-        String sql = "INSERT INTO products VALUES(?,?,?,?)";
-        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        try {
+            String sql = "INSERT INTO products VALUES (?, ?, ?, ?)";
+            try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
+                pstm.setString(1, dto.getCode());
+                pstm.setString(2, dto.getDescription());
+                pstm.setDouble(3, dto.getUnitPrice());
+                pstm.setInt(4, dto.getQuantity());
 
-        pstm.setString(2,dto.getCode());
-        pstm.setString(3,dto.getDescription());
-        pstm.setDouble(4,dto.getUnitPrice());
-        pstm.setInt(1,dto.getQuantity());
-
-        return pstm.executeUpdate()>0;
+                return pstm.executeUpdate() > 0;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public boolean productUpdateBtn(ProductsDto dto) throws SQLException, ClassNotFoundException {
-        String sql = "UPDATE products SET name=?, address=?, salary=? WHERE id=?";
+        String sql = "UPDATE products SET qtyOnHand=?, description=?, unitPrice=? WHERE code=?";
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setString(1,dto.getCode());
+        pstm.setInt(1,dto.getQuantity());
         pstm.setString(2,dto.getDescription());
         pstm.setDouble(3,dto.getUnitPrice());
-        pstm.setInt(4,dto.getQuantity());
+        pstm.setString(4,dto.getCode());
 
         return pstm.executeUpdate()>0;
     }
 
     @Override
-    public boolean productDeleteCustomer(String id) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE from products WHERE id=?";
+    public boolean productDeleteCustomer(String code) throws SQLException, ClassNotFoundException {
+        String sql = "DELETE from products WHERE code=?";
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setString(1,id);
+        pstm.setString(1,code);
         return pstm.executeUpdate()>0;
     }
 

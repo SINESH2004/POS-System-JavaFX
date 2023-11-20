@@ -64,6 +64,9 @@ public class ProductsWindowController implements Initializable {
         Option.setCellValueFactory(new TreeItemPropertyValueFactory<>("delete"));
         loadProductsTable();
 
+//        TableShown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+//            setData(newValue);
+//        });
     }
     private void clearFields() {
         TableShown.refresh();
