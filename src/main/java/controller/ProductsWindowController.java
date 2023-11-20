@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -30,6 +31,7 @@ import model.impl.ProductsModelImpl;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductsWindowController implements Initializable {
@@ -63,6 +65,14 @@ public class ProductsWindowController implements Initializable {
         loadProductsTable();
 
     }
+    private void clearFields() {
+        TableShown.refresh();
+        PriceInput.clear();
+        CodeInput.clear();
+        QtyInput.clear();
+        DescriptionInput.clear();
+        TableShown.setEditable(true);
+    }
     private void setData(ProductsTm newValue) {
         if (newValue != null) {
             TableShown.setEditable(false);
@@ -74,47 +84,43 @@ public class ProductsWindowController implements Initializable {
     }
     private void loadProductsTable() {
         ObservableList<ProductsTm> tmList = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM products";
 
         try {
-            Statement stm = DBConnection.getInstance().getConnection().createStatement();
-            ResultSet result = stm.executeQuery(sql);
+            List<ProductsDto> dtoList = productsModel.productAllCustomers();
 
-            while (result.next()){
+            for (ProductsDto dto : dtoList) {
                 JFXButton btn = new JFXButton("Delete");
 
-                ProductsTm tableModel = new ProductsTm(
-                        result.getString(1),
-                        result.getString(2),
-                        result.getDouble(3),
-                        result.getInt(4),
+                ProductsTm c = new ProductsTm(
+                        dto.getCode(),
+                        dto.getDescription(),
+                        dto.getUnitPrice(),
+                        dto.getQuantity(),
                         btn
                 );
 
                 btn.setOnAction(actionEvent -> {
-                    deleteProduct(tableModel.getCode());
+                    deleteProduct(c.getCode());
                 });
 
-                tmList.add(tableModel);
+                tmList.add(c);
             }
 
-            TreeItem<ProductsTm> treeItem = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
-            TableShown.setRoot(treeItem);
+            TreeItem<ProductsTm> root = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
+            TableShown.setRoot(root);
             TableShown.setShowRoot(false);
-
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
-    private void deleteProduct(String code) {
-        String sql = "DELETE from products WHERE code=?";
 
+    private void deleteProduct(String code) {
         try {
-            PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-            pstm.setString(1,code);
-            int result = pstm.executeUpdate(sql);
-            if (result>0){
-                new Alert(Alert.AlertType.INFORMATION,"Item Deleted!").show();
+            boolean isDeleted = productsModel.productDeleteCustomer(code);
+            if (isDeleted){
+                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted!").show();
                 loadProductsTable();
             }else{
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
@@ -124,10 +130,10 @@ public class ProductsWindowController implements Initializable {
             e.printStackTrace();
         }
     }
+
     public void SearchBtnOnAction(ActionEvent actionEvent) {
 
     }
-
     public void UpdateBtnOnAction(ActionEvent actionEvent) {
         try {
             boolean isUpdated = productsModel.productUpdateBtn(new ProductsDto(CodeInput.getText(),
@@ -144,19 +150,12 @@ public class ProductsWindowController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void clearFields() {
-        TableShown.refresh();
-        PriceInput.clear();
-        CodeInput.clear();
-        QtyInput.clear();
-        DescriptionInput.clear();
-        TableShown.setEditable(true);
-    }
+
     public void SaveBtnOnAction(ActionEvent actionEvent) {
         try {
             boolean isSaved = productsModel.productSaveBtn(new ProductsDto(CodeInput.getText(),
                     DescriptionInput.getText(),
-                    Double.parseDouble(UnitPrice.getText()),
+                    Double.parseDouble(PriceInput.getText()),
                     Integer.parseInt(QtyInput.getText())
             ));
             if (isSaved){
@@ -172,6 +171,7 @@ public class ProductsWindowController implements Initializable {
         }
     }
 //=======================================================================================
+
     public void CustomerBtnOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) pane.getScene().getWindow();
         try {
