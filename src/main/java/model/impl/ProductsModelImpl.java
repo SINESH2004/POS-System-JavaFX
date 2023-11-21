@@ -32,14 +32,15 @@ public class ProductsModelImpl implements ProductsModel {
     @Override
     public boolean productUpdateBtn(ProductsDto dto) throws SQLException, ClassNotFoundException {
         String sql = "UPDATE products SET qtyOnHand=?, description=?, unitPrice=? WHERE code=?";
-        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
-        pstm.setInt(1,dto.getQuantity());
-        pstm.setString(2,dto.getDescription());
-        pstm.setDouble(3,dto.getUnitPrice());
-        pstm.setString(4,dto.getCode());
-
-        return pstm.executeUpdate()>0;
+        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
+            pstm.setInt(1, dto.getQuantity());
+            pstm.setString(2, dto.getDescription());
+            pstm.setDouble(3, dto.getUnitPrice());
+            pstm.setString(4, dto.getCode());
+            return pstm.executeUpdate() > 0;
+        }
     }
+
 
     @Override
     public boolean productDeleteCustomer(String code) throws SQLException, ClassNotFoundException {
@@ -66,4 +67,22 @@ public class ProductsModelImpl implements ProductsModel {
         }
         return list;
     }
+    public ProductsDto getProductByCode(String code) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM products WHERE code=?";
+        try (PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql)) {
+            pstm.setString(1, code);
+            try (ResultSet resultSet = pstm.executeQuery()) {
+                if (resultSet.next()) {
+                    return new ProductsDto(
+                            resultSet.getString("code"),
+                            resultSet.getString("description"),
+                            resultSet.getDouble("unitPrice"),
+                            resultSet.getInt("qtyOnHand")
+                    );
+                }
+            }
+        }
+        return null;
+    }
+
 }

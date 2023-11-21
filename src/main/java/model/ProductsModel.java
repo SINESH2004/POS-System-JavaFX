@@ -1,6 +1,5 @@
 package model;
 
-import dto.CustomerDto;
 import dto.ProductsDto;
 
 import java.sql.SQLException;
@@ -11,4 +10,5 @@ public interface ProductsModel {
     boolean productUpdateBtn(ProductsDto  dto) throws SQLException, ClassNotFoundException;
     boolean productDeleteCustomer(String id) throws SQLException, ClassNotFoundException;
     List<ProductsDto> productAllCustomers() throws SQLException, ClassNotFoundException;
+    ProductsDto getProductByCode(String code) throws SQLException, ClassNotFoundException;
 }

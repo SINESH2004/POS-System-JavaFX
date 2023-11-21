@@ -5,10 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import db.DBConnection;
-import dto.CustomerDto;
 import dto.ProductsDto;
-import dto.TableModel.CustomerTm;
 import dto.TableModel.ProductsTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,20 +14,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.CustomerModel;
 import model.ProductsModel;
-import model.impl.CustomerModelImpl;
 import model.impl.ProductsModelImpl;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -49,9 +44,6 @@ public class ProductsWindowController implements Initializable {
     public JFXTextField QtyInput;
     public JFXTextField PriceInput;
     public JFXTextField DescriptionInput;
-    public JFXTextField txtQty;
-    public JFXTextField txtUnitPrice;
-    public JFXTextField txtDesc;
     public JFXTextField CodeInput;
 
     private ProductsModel productsModel= new ProductsModelImpl();
@@ -64,9 +56,10 @@ public class ProductsWindowController implements Initializable {
         Option.setCellValueFactory(new TreeItemPropertyValueFactory<>("delete"));
         loadProductsTable();
 
-//        TableShown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-//            setData(newValue);
-//        });
+        TableShown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            setData(newValue.getValue());
+        });
+
     }
     private void clearFields() {
         TableShown.refresh();
@@ -81,10 +74,11 @@ public class ProductsWindowController implements Initializable {
             TableShown.setEditable(false);
             CodeInput.setText(newValue.getCode());
             DescriptionInput.setText(newValue.getDescription());
-            UnitPrice.setText(String.valueOf(newValue.getUnitPrice()));
+            PriceInput.setText(String.valueOf(newValue.getUnitPrice()));
             QtyInput.setText(String.valueOf(newValue.getQuantity()));
         }
     }
+
     private void loadProductsTable() {
         ObservableList<ProductsTm> tmList = FXCollections.observableArrayList();
 
@@ -133,15 +127,35 @@ public class ProductsWindowController implements Initializable {
             e.printStackTrace();
         }
     }
-
     public void SearchBtnOnAction(ActionEvent actionEvent) {
+        String searchCode = SearchIDInput.getText().trim();
 
+        if (!searchCode.isEmpty()) {
+            try {
+                ProductsDto product = productsModel.getProductByCode(searchCode);
+
+                if (product != null) {
+                    CodeInput.setText(product.getCode());
+                    DescriptionInput.setText(product.getDescription());
+                    PriceInput.setText(String.valueOf(product.getUnitPrice()));
+                    QtyInput.setText(String.valueOf(product.getQuantity()));
+                } else {
+                    new Alert(Alert.AlertType.INFORMATION, "Product not found!").show();
+                }
+
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "Please enter a product code to search.").show();
+        }
     }
+
     public void UpdateBtnOnAction(ActionEvent actionEvent) {
         try {
             boolean isUpdated = productsModel.productUpdateBtn(new ProductsDto(CodeInput.getText(),
                     DescriptionInput.getText(),
-                    Double.parseDouble(UnitPrice.getText()),
+                    Double.parseDouble(PriceInput.getText()),
                     Integer.parseInt(QtyInput.getText())
             ));
             if (isUpdated){
