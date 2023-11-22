@@ -109,6 +109,7 @@ public class ProductsWindowController implements Initializable {
 
             TreeItem<ProductsTm> root = new RecursiveTreeItem<>(tmList, RecursiveTreeObject::getChildren);
             TableShown.setRoot(root);
+            TableShown.setStyle("-fx-font-weight: bold;-fx-font-family: 'Arial Black'");
             TableShown.setShowRoot(false);
         } catch (SQLException e) {
             e.printStackTrace();

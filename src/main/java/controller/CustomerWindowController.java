@@ -64,12 +64,6 @@ public class CustomerWindowController implements Initializable {
             setData(newValue);
         });
     }
-
-    void reloadButtonOnAction(ActionEvent event) {
-        loadCustomerTable();
-        CustomerTableID.refresh();
-        clearFields();
-    }
     private void clearFields() {
         CustomerTableID.refresh();
         CustomerSalaryField.clear();
@@ -95,6 +89,7 @@ public class CustomerWindowController implements Initializable {
 
             for (CustomerDto dto:dtoList) {
                 Button btn = new Button("Delete");
+                btn.setStyle("-fx-background-color: #f70000;-fx-font-weight: bold;-fx-text-fill: #ffffff;");
 
                 CustomerTm c = new CustomerTm(
                         dto.getId(),
@@ -112,6 +107,7 @@ public class CustomerWindowController implements Initializable {
             }
 
             CustomerTableID.setItems(tmList);
+            CustomerTableID.setStyle("-fx-font-weight: bold;-fx-font-family: 'Arial Black'");
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
