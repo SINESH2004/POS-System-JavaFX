@@ -2,11 +2,13 @@ package model.impl;
 
 import db.DBConnection;
 import dto.ProductsDto;
+import javafx.scene.control.Alert;
 import model.ProductsModel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class ProductsModelImpl implements ProductsModel {
 
                 return pstm.executeUpdate() > 0;
             }
+        }catch (SQLIntegrityConstraintViolationException ex){
+            new Alert(Alert.AlertType.ERROR,"Duplicate Entry").show();
+            return false;
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
             return false;

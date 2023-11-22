@@ -57,7 +57,9 @@ public class ProductsWindowController implements Initializable {
         loadProductsTable();
 
         TableShown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            setData(newValue.getValue());
+            if (newValue!=null) {
+                setData(newValue.getValue());
+            }
         });
 
     }
@@ -87,6 +89,8 @@ public class ProductsWindowController implements Initializable {
 
             for (ProductsDto dto : dtoList) {
                 JFXButton btn = new JFXButton("Delete");
+                btn.setStyle("-fx-background-color: #f70000;-fx-font-weight: bold;-fx-text-fill: #ffffff;");
+
 
                 ProductsTm c = new ProductsTm(
                         dto.getCode(),
@@ -117,7 +121,7 @@ public class ProductsWindowController implements Initializable {
         try {
             boolean isDeleted = productsModel.productDeleteCustomer(code);
             if (isDeleted){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Deleted!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Product Deleted!").show();
                 loadProductsTable();
             }else{
                 new Alert(Alert.AlertType.ERROR,"Something went wrong!").show();
@@ -159,7 +163,7 @@ public class ProductsWindowController implements Initializable {
                     Integer.parseInt(QtyInput.getText())
             ));
             if (isUpdated){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Updated!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Product Updated!").show();
                 loadProductsTable();
                 clearFields();
             }
@@ -176,7 +180,7 @@ public class ProductsWindowController implements Initializable {
                     Integer.parseInt(QtyInput.getText())
             ));
             if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Customer Saved!").show();
+                new Alert(Alert.AlertType.INFORMATION,"Product Saved!").show();
                 loadProductsTable();
                 clearFields();
             }
