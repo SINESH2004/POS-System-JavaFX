@@ -36,3 +36,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+.idea/sonarlint/issuestore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+.idea/sonarlint/issuestore/5/8/5821dfb494fff1ef3f497036b1f570ac4fe071d0
+.idea/sonarlint/issuestore/8/d/8d0bbfb81c954d1075590a7f6957553c792a1ce7
+.idea/sonarlint/issuestore/d/8/d8724d5ff68b00b1e87def6fac487d03194f989f
+*.pb
+.idea/sonarlint/securityhotspotstore/4/4/442292b8a7efeabbe4cc176709b833b1792140ec
+.idea/sonarlint/securityhotspotstore/5/8/5821dfb494fff1ef3f497036b1f570ac4fe071d0
+.idea/sonarlint/securityhotspotstore/8/d/8d0bbfb81c954d1075590a7f6957553c792a1ce7
+.idea/sonarlint/securityhotspotstore/d/8/d8724d5ff68b00b1e87def6fac487d03194f989f

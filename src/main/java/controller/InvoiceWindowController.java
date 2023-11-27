@@ -3,6 +3,10 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import dto.CustomerDto;
+import dto.ProductsDto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,9 +16,16 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.CustomerModel;
+import model.ProductsModel;
+import model.impl.CustomerModelImpl;
+import model.impl.ProductsModelImpl;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class InvoiceWindowController implements Initializable {
@@ -42,10 +53,47 @@ public class InvoiceWindowController implements Initializable {
     public Label TotalLabel;
     public JFXButton CheckOutID;
 
+    private List<CustomerDto> customers;
+    private List<ProductsDto> products;
+
+    private CustomerModel customerModel = new CustomerModelImpl();
+    private ProductsModel productsModel = new ProductsModelImpl();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        loadCustomerID();
+        loadProductID();
     }
+
+    private void loadProductID() {
+        try {
+            products = productsModel.productAllCustomers();
+            ObservableList list = FXCollections.observableArrayList();
+            for (ProductsDto dto:products) {
+                list.add(dto.getCode());
+            }
+            ProductIDDragDown.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadCustomerID() {
+        try {
+            customers = customerModel.allCustomers();
+            ObservableList list = FXCollections.observableArrayList();
+            for (CustomerDto dto:customers) {
+                list.add(dto.getId());
+            }
+            CustomerIDDragDown.setItems(list);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void ProductBtnOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) Pane.getScene().getWindow();
