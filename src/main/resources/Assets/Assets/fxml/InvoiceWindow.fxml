@@ -1,46 +1,157 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="Pane" prefHeight="482.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InvoiceWindowController">
    <children>
-      <Pane layoutX="245.0" layoutY="33.0" prefHeight="482.0" prefWidth="611.0">
+      <Pane layoutX="220.0" layoutY="9.0" prefHeight="506.0" prefWidth="704.0">
          <children>
-            <ImageView fitHeight="523.0" fitWidth="669.0" layoutX="-57.0" layoutY="-38.0" opacity="0.48">
-               <image>
-                  <Image url="@../images/pompeii-ash-free-solidcolor-background.jpg" />
-               </image>
-            </ImageView>
-            <Text id="pointOfSaleStyling" fx:id="pointOfSaleStyling" fill="#3400b9" layoutX="-24.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invoice" wrappingWidth="373.9830722808838">
-               <font>
-                  <Font name="Trebuchet MS Bold" size="30.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="235.0" layoutY="459.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="22.0" fitWidth="36.0" layoutX="258.0" layoutY="479.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Copyright.png" />
                </image>
             </ImageView>
-            <Text fill="#800000" layoutX="173.0" layoutY="474.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights">
+            <Text fill="#800000" layoutX="193.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyrights" wrappingWidth="61.51171875">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
-            <Text fill="#7c0000" layoutX="257.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SG All Rights Reserved">
+            <Text fill="#7c0000" layoutX="282.0" layoutY="495.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SG All Rights Reserved">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
+            <ImageView fitHeight="515.0" fitWidth="743.0" layoutX="-35.0" layoutY="-9.0" opacity="0.48">
+               <image>
+                  <Image url="@../images/pompeii-ash-free-solidcolor-background.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="-20.0" layoutY="3.0" text="Customer ID" textFill="#1328dd">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="232.0" layoutY="3.0" text="Name" textFill="#1328dd">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="-20.0" layoutY="47.0" prefHeight="22.0" prefWidth="103.0" text="Product ID" textFill="#046b0f">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="219.0" layoutY="46.0" text="Description" textFill="#046b0f">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <JFXDialog layoutX="45.0" layoutY="91.0" prefHeight="35.0" prefWidth="101.0" />
+            <JFXComboBox id="CustomerID" fx:id="CustomerIDDragDown" layoutX="96.0" layoutY="2.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" />
+            <JFXComboBox id="ProductID" fx:id="ProductIDDragDown" layoutX="96.0" layoutY="44.0" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #ffffff;" />
+            <JFXTextField fx:id="NameLabel" layoutX="299.0" layoutY="2.0" prefHeight="25.0" prefWidth="205.0" style="-fx-background-color: #ffffff;" />
+            <JFXTextField fx:id="DescriptionLabel" layoutX="335.0" layoutY="45.0" prefHeight="25.0" prefWidth="231.0" style="-fx-background-color: #ffffff;" />
+            <Label layoutX="14.0" layoutY="448.0" prefHeight="32.0" prefWidth="73.0" text="Total">
+               <font>
+                  <Font name="Marlett" size="25.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.18421052396297455" green="0.18421052396297455" blue="0.18421052396297455" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Label layoutX="204.0" layoutY="98.0" prefHeight="22.0" prefWidth="155.0" text="Unit Price" textFill="#046b0f">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="438.0" layoutY="99.0" prefHeight="22.0" prefWidth="155.0" text="Amount" textFill="#ab0505">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <JFXComboBox fx:id="QuantityDragDown" layoutX="96.0" layoutY="98.0" style="-fx-background-color: #ffffff;" />
+            <JFXTextField fx:id="UnitPriceLabel" layoutX="299.0" layoutY="97.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #ffffff;">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="AmountID" layoutX="522.0" layoutY="98.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #ffffff;">
+               <font>
+                  <Font name="System Bold" size="11.0" />
+               </font>
+            </JFXTextField>
+            <JFXTreeTableView layoutX="-6.0" layoutY="180.0" prefHeight="256.0" prefWidth="678.0">
+               <columns>
+                  <TreeTableColumn fx:id="SI_increment" editable="false" prefWidth="44.0" resizable="false" sortable="false" text="SI" />
+                  <TreeTableColumn fx:id="DescribeCell" editable="false" prefWidth="221.0" resizable="false" sortable="false" text="Description" />
+                  <TreeTableColumn fx:id="QuantityCell" editable="false" prefWidth="86.0" resizable="false" sortable="false" text="Quantity" />
+                  <TreeTableColumn fx:id="RateCell" editable="false" prefWidth="96.0" resizable="false" sortable="false" text="Rate" />
+                  <TreeTableColumn fx:id="AmountCell" editable="false" prefWidth="117.0" resizable="false" sortable="false" text="Amount" />
+                  <TreeTableColumn fx:id="OptionCell" editable="false" prefWidth="116.0" resizable="false" sortable="false" text="Option" />
+               </columns>
+            </JFXTreeTableView>
+            <Label layoutX="516.0" layoutY="3.0" prefHeight="17.0" prefWidth="73.0" text="INVOICE" textFill="#c6008b">
+               <font>
+                  <Font name="Ebrima Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="InvoiceIncrement" layoutX="598.0" layoutY="1.0" prefHeight="17.0" prefWidth="79.0" style="-fx-background-color: #ffc7fa;">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="572.0" layoutY="137.0" style="-fx-background-color: #007a35;" text="Add To Cart" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="15.0" />
+               </font>
+            </JFXButton>
+            <Label fx:id="TotalLabel" layoutX="83.0" layoutY="445.0" prefHeight="38.0" prefWidth="128.0" style="-fx-background-color: #dee3e0;" textFill="#141414">
+               <font>
+                  <Font name="Arial Black" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="-20.0" layoutY="100.0" prefHeight="22.0" prefWidth="103.0" text="Quantity" textFill="#046b0f">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="CheckOutID" layoutX="523.0" layoutY="445.0" onAction="#CheckOutOnAction" prefHeight="46.0" prefWidth="140.0" style="-fx-background-color: #c20202;" text="Check Out" textFill="WHITE">
+               <font>
+                  <Font name="Serif Bold" size="23.0" />
+               </font>
+            </JFXButton>
          </children>
       </Pane>
-      <Line endX="77.0" layoutX="116.0" layoutY="146.0" startX="-116.0" />
+      <Line endX="67.0" layoutX="116.0" layoutY="146.0" startX="-116.0" />
       <JFXButton id="HomeBtn" fx:id="HomeBtn" layoutX="67.0" layoutY="172.0" onAction="#HomeBtnOnAction" prefHeight="36.0" prefWidth="90.0" text="HOME">
          <font>
             <Font name="Arial Black" size="12.0" />
