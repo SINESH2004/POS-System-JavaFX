@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
@@ -52,24 +53,89 @@ public class InvoiceWindowController implements Initializable {
     public Label InvoiceIncrement;
     public Label TotalLabel;
     public JFXButton CheckOutID;
+    public JFXTextField QuantityLabel;
+    public JFXButton AddToCartBtn;
 
     private List<CustomerDto> customers;
     private List<ProductsDto> products;
 
     private CustomerModel customerModel = new CustomerModelImpl();
     private ProductsModel productsModel = new ProductsModelImpl();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadCustomerID();
         loadProductID();
+
+        ProductIDDragDown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, productID) -> {
+            System.out.println(observableValue);
+            System.out.println(productID);
+            String[] parts = productID.toString().split("-");
+                if (parts.length == 2) {
+                    String selectedCode = parts[0];
+                    for (ProductsDto dto :products) {
+                        if (dto.getCode().equals(selectedCode)) {
+                            UnitPriceLabel.setText(String.valueOf(dto.getUnitPrice()));
+                        }
+                    }
+                }
+        });
+
+        QuantityLabel.textProperty().addListener(observable -> {
+            Calculation();
+        });
     }
+    public void Calculation() {
+        try {
+            int enteredQuantity = Integer.parseInt(QuantityLabel.getText());
+            String unitPriceText = UnitPriceLabel.getText();
+
+            if (!unitPriceText.isEmpty()) {
+                Double unitPrice = Double.valueOf(unitPriceText);
+
+                String productIDString = ProductIDDragDown.getValue().toString();
+                String[] parts = productIDString.split("-");
+                if (parts.length == 2) {
+                    String selectedCode = parts[0];
+                    for (ProductsDto dto : products) {
+                        if (dto.getCode().equals(selectedCode)) {
+                            int availableQuantity = dto.getQuantity();
+                            if (enteredQuantity <= availableQuantity) {
+                                Double total = enteredQuantity * unitPrice;
+                                AmountID.setText(String.valueOf(total));
+                            } else if(enteredQuantity > availableQuantity){
+                                showAlert("Exceeds Store Limit", "Entered quantity exceeds available quantity. Available quantity: " + availableQuantity);
+                            }else{
+
+                            }
+                            break;
+                        }
+                    }
+                }
+            } else {
+                AmountID.setText("0");
+            }
+        } catch (NumberFormatException e) {
+
+        }
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+
 
     private void loadProductID() {
         try {
             products = productsModel.productAllCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (ProductsDto dto:products) {
-                list.add(dto.getCode());
+                list.add(dto.getCode()+"-"+ dto.getDescription());
             }
             ProductIDDragDown.setItems(list);
         } catch (SQLException e) {
@@ -84,7 +150,7 @@ public class InvoiceWindowController implements Initializable {
             customers = customerModel.allCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (CustomerDto dto:customers) {
-                list.add(dto.getId());
+                list.add(dto.getId() + "-" + dto.getName());
             }
             CustomerIDDragDown.setItems(list);
         } catch (SQLException e) {
@@ -146,6 +212,10 @@ public class InvoiceWindowController implements Initializable {
     }
 
     public void CheckOutOnAction(ActionEvent actionEvent) {
+
+    }
+
+    public void AddToCartBtnOnAction(ActionEvent actionEvent) {
 
     }
 }
