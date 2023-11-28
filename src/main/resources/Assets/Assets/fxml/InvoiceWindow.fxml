@@ -96,7 +96,7 @@
                   <Font name="Arial Black" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTreeTableView layoutX="-6.0" layoutY="180.0" prefHeight="256.0" prefWidth="678.0">
+            <JFXTreeTableView fx:id="TableView" layoutX="-6.0" layoutY="180.0" prefHeight="256.0" prefWidth="678.0">
                <columns>
                   <TreeTableColumn fx:id="SI_increment" editable="false" prefWidth="44.0" resizable="false" sortable="false" text="SI" />
                   <TreeTableColumn fx:id="DescribeCell" editable="false" prefWidth="221.0" resizable="false" sortable="false" text="Description" />

@@ -3,8 +3,10 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableView;
 import dto.CustomerDto;
 import dto.ProductsDto;
+import dto.TableModel.InvoiceTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +27,6 @@ import model.impl.ProductsModelImpl;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -55,6 +56,7 @@ public class InvoiceWindowController implements Initializable {
     public JFXButton CheckOutID;
     public JFXTextField QuantityLabel;
     public JFXButton AddToCartBtn;
+    public JFXTreeTableView<InvoiceTm> TableView;
 
     private List<CustomerDto> customers;
     private List<ProductsDto> products;
@@ -62,6 +64,7 @@ public class InvoiceWindowController implements Initializable {
     private CustomerModel customerModel = new CustomerModelImpl();
     private ProductsModel productsModel = new ProductsModelImpl();
 
+    private List<InvoiceTm> tmList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadCustomerID();
@@ -105,8 +108,6 @@ public class InvoiceWindowController implements Initializable {
                                 AmountID.setText(String.valueOf(total));
                             } else if(enteredQuantity > availableQuantity){
                                 showAlert("Exceeds Store Limit", "Entered quantity exceeds available quantity. Available quantity: " + availableQuantity);
-                            }else{
-
                             }
                             break;
                         }
@@ -216,6 +217,12 @@ public class InvoiceWindowController implements Initializable {
     }
 
     public void AddToCartBtnOnAction(ActionEvent actionEvent) {
-
+        String productIDString = ProductIDDragDown.getValue().toString();
+        String[] parts = productIDString.split("-");
+        String desc = parts[1];
+        InvoiceTm itm = new InvoiceTm(
+          1,desc,Integer.parseInt(QuantityLabel.getText()),Double.parseDouble(UnitPriceLabel.getText()),
+                Double.parseDouble(AmountID.getText()),
+        );
     }
 }
