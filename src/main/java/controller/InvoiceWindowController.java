@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.CustomerDto;
+import dto.OrderDto;
 import dto.ProductsDto;
 import dto.TableModel.OrderTm;
 import javafx.collections.FXCollections;
@@ -18,8 +19,10 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CustomerModel;
+import model.OrderModel;
 import model.ProductsModel;
 import model.impl.CustomerModelImpl;
+import model.impl.OrderModelImpl;
 import model.impl.ProductsModelImpl;
 
 import java.io.IOException;
@@ -52,13 +55,14 @@ public class InvoiceWindowController implements Initializable {
     public JFXTextField ProductName;
     public TreeTableColumn CodeCell;
     public Label TotalLabel;
+    public Label InvoiceNo;
     private List<CustomerDto> customers;
     private List<ProductsDto> products;
     private double total = 0;
 
     private CustomerModel customerModel = new CustomerModelImpl();
     private ProductsModel productsModel = new ProductsModelImpl();
-
+    private OrderModel orderModel = new OrderModelImpl();
     private ObservableList<OrderTm> tmList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,6 +74,8 @@ public class InvoiceWindowController implements Initializable {
 
         loadCustomerID();
         loadProductID();
+
+        generateID();
 
         CustomerIDragDown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             for (CustomerDto dto :customers) {
@@ -117,8 +123,29 @@ public class InvoiceWindowController implements Initializable {
         }
     }
 
-    public void CheckOutOnAction(ActionEvent actionEvent) {
+    public void generateID(){
+        try {
+            OrderDto Dto = orderModel.lastOrder();
+            if (Dto!=null) {
+                String orderID = Dto.getOrderID();
+                int s = Integer.parseInt(orderID.split("[D]")[1]);
+                s++;
+                InvoiceNo.setText(String.format("D%03d",s));
+            }else{
+                InvoiceNo.setText("D001");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+
+    public void CheckOutOnAction(ActionEvent actionEvent) {
+        if (!tmList.isEmpty()){
+            //orderModel.saveOrder()
+        }
     }
 
     public void AddToCartBtnOnAction(ActionEvent actionEvent) {
