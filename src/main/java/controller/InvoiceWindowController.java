@@ -54,6 +54,7 @@ public class InvoiceWindowController implements Initializable {
     public Label TotalLabel;
     private List<CustomerDto> customers;
     private List<ProductsDto> products;
+    private double total = 0;
 
     private CustomerModel customerModel = new CustomerModelImpl();
     private ProductsModel productsModel = new ProductsModelImpl();
@@ -134,20 +135,29 @@ public class InvoiceWindowController implements Initializable {
                     btn
                     );
 
+            btn.setOnAction(actionEvent1 -> {
+                tmList.remove(tm);
+                total-= tm.getAmount();
+                TableView.refresh();
+                TotalLabel.setText(String.valueOf(total));
+            });
             boolean isExist= false;
             for (OrderTm order:tmList) {
                 if (order.getCode().equals(tm.getCode())){
                     order.setQuantity(order.getQuantity()+tm.getQuantity());
                     order.setAmount(order.getAmount()+tm.getAmount());
                     isExist=true;
+                    total += tm.getAmount();
                 }
             }
             if (!isExist){
                 tmList.add(tm);
+                total += tm.getAmount();
             }
             TreeItem<OrderTm> treeItem = new RecursiveTreeItem<OrderTm>(tmList, RecursiveTreeObject::getChildren);
             TableView.setRoot(treeItem);
             TableView.setShowRoot(false);
+            TotalLabel.setText(String.valueOf(total));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
