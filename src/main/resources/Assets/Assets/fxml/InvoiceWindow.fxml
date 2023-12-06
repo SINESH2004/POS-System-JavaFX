@@ -42,19 +42,19 @@
                   <Image url="@../images/pompeii-ash-free-solidcolor-background.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="-20.0" layoutY="3.0" text="Customer Name" textFill="#1328dd">
+            <Label layoutX="-20.0" layoutY="3.0" text="Customer Code" textFill="#1328dd">
                <font>
                   <Font name="Trebuchet MS Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="-20.0" layoutY="47.0" prefHeight="22.0" prefWidth="184.0" text="Product Description" textFill="#046b0f">
+            <Label layoutX="-14.0" layoutY="48.0" prefHeight="22.0" prefWidth="101.0" text="Product ID" textFill="#046b0f">
                <font>
                   <Font name="Trebuchet MS Bold" size="19.0" />
                </font>
             </Label>
             <JFXDialog layoutX="45.0" layoutY="91.0" prefHeight="35.0" prefWidth="101.0" />
-            <JFXComboBox id="CustomerID" fx:id="CustomerIDDragDown" layoutX="141.0" layoutY="2.0" prefHeight="25.0" prefWidth="192.0" style="-fx-background-color: #ffffff;" />
-            <JFXComboBox id="ProductID" fx:id="ProductIDDragDown" layoutX="173.0" layoutY="46.0" prefHeight="25.0" prefWidth="228.0" style="-fx-background-color: #ffffff;" />
+            <JFXComboBox id="CustomerID" fx:id="CustomerIDragDown" layoutX="128.0" layoutY="2.0" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #ffffff;" />
+            <JFXComboBox id="ProductID" fx:id="ProductIDDragDown" layoutX="115.0" layoutY="47.0" prefHeight="25.0" prefWidth="90.0" style="-fx-background-color: #ffffff;" />
             <Label layoutX="14.0" layoutY="448.0" prefHeight="32.0" prefWidth="73.0" text="Total">
                <font>
                   <Font name="Marlett" size="25.0" />
@@ -76,47 +76,26 @@
                   </LinearGradient>
                </textFill>
             </Label>
-            <Label layoutX="184.0" layoutY="98.0" prefHeight="22.0" prefWidth="155.0" text="Unit Price" textFill="#046b0f">
+            <Label layoutX="268.0" layoutY="98.0" prefHeight="22.0" prefWidth="155.0" text="Unit Price" textFill="#046b0f">
                <font>
                   <Font name="Trebuchet MS Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="438.0" layoutY="99.0" prefHeight="22.0" prefWidth="155.0" text="Amount" textFill="#ab0505">
-               <font>
-                  <Font name="Trebuchet MS Bold" size="19.0" />
-               </font>
-            </Label>
-            <JFXTextField fx:id="UnitPriceLabel" layoutX="282.0" layoutY="96.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #c7d4ca;">
+            <JFXTextField fx:id="UnitPriceLabel" layoutX="416.0" layoutY="93.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #c7d4ca;">
                <font>
                   <Font name="Arial Black" size="14.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="AmountID" layoutX="535.0" layoutY="98.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-color: #c7d4ca;">
-               <font>
-                  <Font name="Arial Black" size="14.0" />
-               </font>
-            </JFXTextField>
-            <JFXTreeTableView fx:id="TableView" layoutX="-6.0" layoutY="180.0" prefHeight="256.0" prefWidth="678.0">
+            <JFXTreeTableView fx:id="TableView" layoutX="-6.0" layoutY="139.0" prefHeight="292.0" prefWidth="678.0">
                <columns>
-                  <TreeTableColumn fx:id="SI_increment" editable="false" prefWidth="44.0" resizable="false" sortable="false" text="SI" />
-                  <TreeTableColumn fx:id="DescribeCell" editable="false" prefWidth="221.0" resizable="false" sortable="false" text="Description" />
-                  <TreeTableColumn fx:id="QuantityCell" editable="false" prefWidth="86.0" resizable="false" sortable="false" text="Quantity" />
-                  <TreeTableColumn fx:id="RateCell" editable="false" prefWidth="96.0" resizable="false" sortable="false" text="Rate" />
-                  <TreeTableColumn fx:id="AmountCell" editable="false" prefWidth="117.0" resizable="false" sortable="false" text="Amount" />
-                  <TreeTableColumn fx:id="OptionCell" editable="false" prefWidth="116.0" resizable="false" sortable="false" text="Option" />
+                  <TreeTableColumn fx:id="CodeCell" editable="false" prefWidth="44.0" resizable="false" sortable="false" text="Code" />
+                  <TreeTableColumn fx:id="DescribeCell" editable="false" prefWidth="265.0" resizable="false" sortable="false" text="Description" />
+                  <TreeTableColumn fx:id="QuantityCell" editable="false" prefWidth="85.0" resizable="false" sortable="false" text="Quantity" />
+                  <TreeTableColumn fx:id="AmountCell" editable="false" prefWidth="154.0" resizable="false" sortable="false" text="Amount" />
+                  <TreeTableColumn fx:id="OptionCell" editable="false" prefWidth="129.0" resizable="false" sortable="false" text="Option" />
                </columns>
             </JFXTreeTableView>
-            <Label layoutX="516.0" layoutY="3.0" prefHeight="17.0" prefWidth="73.0" text="INVOICE" textFill="#c6008b">
-               <font>
-                  <Font name="Ebrima Bold" size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="InvoiceIncrement" layoutX="598.0" layoutY="1.0" prefHeight="17.0" prefWidth="79.0" style="-fx-background-color: #ffc7fa;">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <JFXButton fx:id="AddToCartBtn" layoutX="572.0" layoutY="137.0" onAction="#AddToCartBtnOnAction" style="-fx-background-color: #007a35;" text="Add To Cart" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="AddToCartBtn" layoutX="570.0" layoutY="104.0" onAction="#AddToCartBtnOnAction" style="-fx-background-color: #007a35;" text="Add To Cart" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="15.0" />
                </font>
@@ -126,7 +105,7 @@
                   <Font name="Arial Black" size="25.0" />
                </font>
             </Label>
-            <Label layoutX="-20.0" layoutY="100.0" prefHeight="22.0" prefWidth="103.0" text="Quantity" textFill="#046b0f">
+            <Label layoutX="-1.0" layoutY="100.0" prefHeight="22.0" prefWidth="103.0" text="Quantity" textFill="#046b0f">
                <font>
                   <Font name="Trebuchet MS Bold" size="19.0" />
                </font>
@@ -136,10 +115,30 @@
                   <Font name="Serif Bold" size="23.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="QuantityLabel" layoutX="72.0" layoutY="94.0" prefHeight="16.0" prefWidth="79.0" style="-fx-background-color: #c7d4ca;">
+            <JFXTextField fx:id="QuantityLabel" layoutX="108.0" layoutY="94.0" prefHeight="16.0" prefWidth="79.0" style="-fx-background-color: #c7d4ca;">
                <font>
                   <Font name="Arial Black" size="16.0" />
                </font></JFXTextField>
+            <Label layoutX="269.0" layoutY="4.0" text="Name" textFill="#1328dd">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="269.0" layoutY="48.0" prefHeight="22.0" prefWidth="128.0" text="Product Name" textFill="#046b0f">
+               <font>
+                  <Font name="Trebuchet MS Bold" size="19.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="ProductName" layoutX="417.0" layoutY="44.0" prefHeight="28.0" prefWidth="212.0" style="-fx-background-color: #ffffff;">
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="NameLabel" layoutX="410.0" layoutY="1.0" prefHeight="22.0" prefWidth="169.0" style="-fx-background-color: #ffffff;">
+               <font>
+                  <Font name="Arial Black" size="13.0" />
+               </font>
+            </JFXTextField>
          </children>
       </Pane>
       <Line endX="67.0" layoutX="116.0" layoutY="146.0" startX="-116.0" />

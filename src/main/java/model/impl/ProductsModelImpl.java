@@ -48,7 +48,7 @@ public class ProductsModelImpl implements ProductsModel {
 
 
     @Override
-    public boolean productDeleteCustomer(String code) throws SQLException, ClassNotFoundException {
+    public boolean deleteProduct(String code) throws SQLException, ClassNotFoundException {
         String sql = "DELETE from products WHERE code=?";
         PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
         pstm.setString(1,code);
@@ -56,7 +56,7 @@ public class ProductsModelImpl implements ProductsModel {
     }
 
     @Override
-    public List<ProductsDto> productAllCustomers() throws SQLException, ClassNotFoundException {
+    public List<ProductsDto> allProducts() throws SQLException, ClassNotFoundException {
         List<dto.ProductsDto> list = new ArrayList<>();
 
         String sql = "SELECT * FROM products";

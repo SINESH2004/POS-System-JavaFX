@@ -85,7 +85,7 @@ public class ProductsWindowController implements Initializable {
         ObservableList<ProductsTm> tmList = FXCollections.observableArrayList();
 
         try {
-            List<ProductsDto> dtoList = productsModel.productAllCustomers();
+            List<ProductsDto> dtoList = productsModel.allProducts();
 
             for (ProductsDto dto : dtoList) {
                 JFXButton btn = new JFXButton("Delete");
@@ -120,7 +120,7 @@ public class ProductsWindowController implements Initializable {
 
     private void deleteProduct(String code) {
         try {
-            boolean isDeleted = productsModel.productDeleteCustomer(code);
+            boolean isDeleted = productsModel.deleteProduct(code);
             if (isDeleted){
                 new Alert(Alert.AlertType.INFORMATION,"Product Deleted!").show();
                 loadProductsTable();

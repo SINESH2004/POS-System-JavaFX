@@ -1,23 +1,21 @@
 package controller;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.CustomerDto;
 import dto.ProductsDto;
-import dto.TableModel.InvoiceTm;
+import dto.TableModel.OrderTm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.CustomerModel;
 import model.ProductsModel;
@@ -31,112 +29,69 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class InvoiceWindowController implements Initializable {
-    public Text pointOfSaleStyling;
     public JFXButton InvoiceBtn;
     public JFXButton ReportBtn;
     public JFXButton CustomerBtn;
     public JFXButton ProductBtn;
     public JFXButton HomeBtn;
     public AnchorPane Pane;
-    public JFXComboBox CustomerIDDragDown;
     public JFXComboBox ProductIDDragDown;
     public JFXTextField NameLabel;
-    public JFXTextField DescriptionLabel;
-    public JFXComboBox QuantityDragDown;
     public JFXTextField UnitPriceLabel;
     public JFXTextField AmountID;
-    public TreeTableColumn SI_increment;
     public TreeTableColumn DescribeCell;
     public TreeTableColumn QuantityCell;
-    public TreeTableColumn RateCell;
     public TreeTableColumn AmountCell;
     public TreeTableColumn OptionCell;
     public Label InvoiceIncrement;
-    public Label TotalLabel;
     public JFXButton CheckOutID;
     public JFXTextField QuantityLabel;
     public JFXButton AddToCartBtn;
-    public JFXTreeTableView<InvoiceTm> TableView;
-
+    public JFXTreeTableView<OrderTm> TableView;
+    public JFXComboBox CustomerIDragDown;
+    public JFXTextField ProductName;
+    public TreeTableColumn CodeCell;
+    public Label TotalLabel;
     private List<CustomerDto> customers;
     private List<ProductsDto> products;
 
     private CustomerModel customerModel = new CustomerModelImpl();
     private ProductsModel productsModel = new ProductsModelImpl();
 
-    private List<InvoiceTm> tmList = FXCollections.observableArrayList();
+    private ObservableList<OrderTm> tmList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        CodeCell.setCellValueFactory(new TreeItemPropertyValueFactory<>("code"));
+        DescribeCell.setCellValueFactory(new TreeItemPropertyValueFactory<>("desc"));
+        QuantityCell.setCellValueFactory(new TreeItemPropertyValueFactory<>("quantity"));
+        AmountCell.setCellValueFactory(new TreeItemPropertyValueFactory<>("amount"));
+        OptionCell.setCellValueFactory(new TreeItemPropertyValueFactory<>("btn"));
+
         loadCustomerID();
         loadProductID();
 
-        ProductIDDragDown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, productID) -> {
-            System.out.println(observableValue);
-            System.out.println(productID);
-            String[] parts = productID.toString().split("-");
-                if (parts.length == 2) {
-                    String selectedCode = parts[0];
-                    for (ProductsDto dto :products) {
-                        if (dto.getCode().equals(selectedCode)) {
-                            UnitPriceLabel.setText(String.valueOf(dto.getUnitPrice()));
-                        }
-                    }
+        CustomerIDragDown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            for (CustomerDto dto :customers) {
+                if (dto.getId().equals(newValue)){
+                    NameLabel.setText(dto.getName());
                 }
-        });
-
-        QuantityLabel.textProperty().addListener(observable -> {
-            Calculation();
-        });
-    }
-    public void Calculation() {
-        try {
-            int enteredQuantity = Integer.parseInt(QuantityLabel.getText());
-            String unitPriceText = UnitPriceLabel.getText();
-
-            if (!unitPriceText.isEmpty()) {
-                Double unitPrice = Double.valueOf(unitPriceText);
-
-                String productIDString = ProductIDDragDown.getValue().toString();
-                String[] parts = productIDString.split("-");
-                if (parts.length == 2) {
-                    String selectedCode = parts[0];
-                    for (ProductsDto dto : products) {
-                        if (dto.getCode().equals(selectedCode)) {
-                            int availableQuantity = dto.getQuantity();
-                            if (enteredQuantity <= availableQuantity) {
-                                Double total = enteredQuantity * unitPrice;
-                                AmountID.setText(String.valueOf(total));
-                            } else if(enteredQuantity > availableQuantity){
-                                showAlert("Exceeds Store Limit", "Entered quantity exceeds available quantity. Available quantity: " + availableQuantity);
-                            }
-                            break;
-                        }
-                    }
-                }
-            } else {
-                AmountID.setText("0");
             }
-        } catch (NumberFormatException e) {
-
-        }
+        });
+        ProductIDDragDown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            for (ProductsDto dto :products) {
+                if (dto.getCode().equals(newValue)){
+                    ProductName.setText(dto.getDescription());
+                    UnitPriceLabel.setText(String.format("%.2f",dto.getUnitPrice()));
+                }
+            }
+        });
     }
-
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-
-
     private void loadProductID() {
         try {
-            products = productsModel.productAllCustomers();
-            ObservableList list = FXCollections.observableArrayList();
+            products = productsModel.allProducts();
+            ObservableList list =FXCollections.observableArrayList();
             for (ProductsDto dto:products) {
-                list.add(dto.getCode()+"-"+ dto.getDescription());
+                list.add(dto.getCode());
             }
             ProductIDDragDown.setItems(list);
         } catch (SQLException e) {
@@ -151,9 +106,9 @@ public class InvoiceWindowController implements Initializable {
             customers = customerModel.allCustomers();
             ObservableList list = FXCollections.observableArrayList();
             for (CustomerDto dto:customers) {
-                list.add(dto.getId() + "-" + dto.getName());
+                list.add(dto.getId());
             }
-            CustomerIDDragDown.setItems(list);
+            CustomerIDragDown.setItems(list);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -161,7 +116,46 @@ public class InvoiceWindowController implements Initializable {
         }
     }
 
+    public void CheckOutOnAction(ActionEvent actionEvent) {
 
+    }
+
+    public void AddToCartBtnOnAction(ActionEvent actionEvent) {
+        try {
+            double amount = productsModel.getProductByCode(ProductIDDragDown.getValue().
+                    toString()).getUnitPrice() *
+                    Integer.parseInt(QuantityLabel.getText());
+            JFXButton btn = new JFXButton("Delete");
+            OrderTm tm = new OrderTm(
+                    ProductIDDragDown.getValue().toString(),
+                    ProductName.getText(),
+                    Integer.parseInt(QuantityLabel.getText()),
+                    amount,
+                    btn
+                    );
+
+            boolean isExist= false;
+            for (OrderTm order:tmList) {
+                if (order.getCode().equals(tm.getCode())){
+                    order.setQuantity(order.getQuantity()+tm.getQuantity());
+                    order.setAmount(order.getAmount()+tm.getAmount());
+                    isExist=true;
+                }
+            }
+            if (!isExist){
+                tmList.add(tm);
+            }
+            TreeItem<OrderTm> treeItem = new RecursiveTreeItem<OrderTm>(tmList, RecursiveTreeObject::getChildren);
+            TableView.setRoot(treeItem);
+            TableView.setShowRoot(false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //===========================================================================================================
+    // ===========================================================================================================
     public void ProductBtnOnAction(ActionEvent actionEvent) {
         Stage stage = (Stage) Pane.getScene().getWindow();
         try {
@@ -210,19 +204,5 @@ public class InvoiceWindowController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void CheckOutOnAction(ActionEvent actionEvent) {
-
-    }
-
-    public void AddToCartBtnOnAction(ActionEvent actionEvent) {
-        String productIDString = ProductIDDragDown.getValue().toString();
-        String[] parts = productIDString.split("-");
-        String desc = parts[1];
-        InvoiceTm itm = new InvoiceTm(
-          1,desc,Integer.parseInt(QuantityLabel.getText()),Double.parseDouble(UnitPriceLabel.getText()),
-                Double.parseDouble(AmountID.getText()),
-        );
     }
 }

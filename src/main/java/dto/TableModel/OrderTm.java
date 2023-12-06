@@ -9,11 +9,10 @@ import lombok.*;
 @Setter
 @ToString
 @Getter
-public class InvoiceTm extends RecursiveTreeObject<InvoiceTm> {
-    private int S1;
-    private String description;
+public class OrderTm extends RecursiveTreeObject<OrderTm> {
+    private String code;
+    private String desc;
     private int quantity;
-    private double rate;
     private double amount;
-    private JFXButton delete;
+    private JFXButton btn;
 }
