@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.CustomerDto;
+import dto.OrderDetailsDto;
 import dto.OrderDto;
 import dto.ProductsDto;
 import dto.TableModel.OrderTm;
@@ -12,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -28,6 +30,9 @@ import model.impl.ProductsModelImpl;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -143,9 +148,34 @@ public class InvoiceWindowController implements Initializable {
 
 
     public void CheckOutOnAction(ActionEvent actionEvent) {
-        if (!tmList.isEmpty()){
-            //orderModel.saveOrder()
+    List<OrderDetailsDto> list = new ArrayList<>();
+        for (OrderTm tm:tmList) {
+            list.add(new OrderDetailsDto(
+               InvoiceNo.getText(),
+               tm.getCode(),
+                    tm.getQuantity(), tm.getAmount()/tm.getQuantity()
+            ));
         }
+            boolean isSaved = false;
+            try {
+                isSaved = orderModel.saveOrder(new OrderDto(
+                        InvoiceNo.getText(),
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("YYYY-MM-dd")).toString(),
+                        CustomerIDragDown.getValue().toString(),
+                        list
+                ));
+
+                if (isSaved){
+                    new Alert(Alert.AlertType.INFORMATION,"Order Saved").show();
+                }else{
+                    new Alert(Alert.AlertType.ERROR,"Something went wrong").show();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
     }
 
     public void AddToCartBtnOnAction(ActionEvent actionEvent) {
