@@ -7,6 +7,8 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import dto.ProductsDto;
 import dto.TableModel.ProductsTm;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +30,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class ProductsWindowController implements Initializable {
     public BorderPane pane;
@@ -59,6 +62,19 @@ public class ProductsWindowController implements Initializable {
         TableShown.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue!=null) {
                 setData(newValue.getValue());
+            }
+        });
+
+        SearchIDInput.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String newValue) {
+                TableShown.setPredicate(new Predicate<TreeItem<ProductsTm>>() {
+                    @Override
+                    public boolean test(TreeItem<ProductsTm> productsTmTreeItem) {
+                        return productsTmTreeItem.getValue().getCode().contains(newValue)|
+                                productsTmTreeItem.getValue().getDescription().contains(newValue);
+                    }
+                });
             }
         });
 
